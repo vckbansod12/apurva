@@ -7,8 +7,17 @@ pipeline {
       }
     }
     stage('test2') {
-      steps {
-        mail(subject: 'test', body: 'test', from: 'viky@contentsphere.com', to: 'apurva.bhandari@contentserv.com')
+      parallel {
+        stage('test2') {
+          steps {
+            mail(subject: 'test', body: 'test', from: 'viky@contentsphere.com', to: 'apurva.bhandari@contentserv.com')
+          }
+        }
+        stage('newBranch') {
+          steps {
+            sh 'echo "Test multibranch"'
+          }
+        }
       }
     }
   }
